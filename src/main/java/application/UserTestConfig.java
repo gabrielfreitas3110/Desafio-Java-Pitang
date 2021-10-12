@@ -7,7 +7,7 @@ import bean.User;
 import dao.DaoFactory;
 import dao.UserDao;
 
-public class Program {
+public class UserTestConfig {
 
 	public static void main(String[] args) {
 		

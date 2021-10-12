@@ -48,7 +48,10 @@ public class UserDaoJDBC implements UserDao {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			ps = con.prepareStatement("SELECT * FROM tb_user WHERE id = ?");
+			ps = con.prepareStatement(
+					"SELECT tb_user.*, tb_cellphone.ddd, tb_cellphone.number, tb_cellphone.type "
+					+ "FROM tb_user INNER JOIN tb_cellphone "
+					+ "ON tb_user.id = tb_cellphone.user_id WHERE tb_cellphone.user_id = ?");
 			ps.setInt(1, id);
 			rs = ps.executeQuery();
 			if (rs.next()) {

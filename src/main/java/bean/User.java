@@ -1,6 +1,8 @@
 package bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class User implements Serializable{
@@ -10,6 +12,8 @@ public class User implements Serializable{
 	private String name;
 	private String email;
 	private String password;
+	
+	private List<Cellphone> cellphones = new ArrayList<>();
 	
 	public User() {
 	}
@@ -51,6 +55,14 @@ public class User implements Serializable{
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public List<Cellphone> getCellphones() {
+		return cellphones;
+	}
+
+	public void addCellphone(Cellphone cellphone) {
+		this.cellphones.add(cellphone);
 	}
 
 	@Override
