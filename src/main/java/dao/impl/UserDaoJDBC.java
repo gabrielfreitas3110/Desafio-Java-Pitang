@@ -12,6 +12,7 @@ import bean.User;
 import dao.UserDao;
 import db.DB;
 import db.DbException;
+import db.DbIntegrityException;
 
 public class UserDaoJDBC implements UserDao {
 
@@ -113,7 +114,19 @@ public class UserDaoJDBC implements UserDao {
 
 	@Override
 	public void delete(Integer id) {
-		// TODO Auto-generated method stub
+		PreparedStatement ps = null;
+		try {
+			ps = con.prepareStatement("DELETE FROM tb_user WHERE id = ?");
+			ps.setInt(1, id);
+			int rows = ps.executeUpdate();
+			if (rows == 0 ) {
+				throw new DbException("Id doesn't exists in table tb_user");
+			}
+		} catch (SQLException e) {
+			throw new DbIntegrityException(e.getMessage());
+		} finally {
+			DB.closeStatement(ps);
+		}
 
 	}
 
