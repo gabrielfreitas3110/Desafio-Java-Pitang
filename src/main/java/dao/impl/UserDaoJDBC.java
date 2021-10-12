@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +65,31 @@ public class UserDaoJDBC implements UserDao {
 
 	@Override
 	public void insert(User obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement ps = null;
+		try {
+			ps = con.prepareStatement("INSERT INTO " 
+					+ "tb_user (name, email, password) " 
+					+ "VALUES (?, ?, ?) ",
+					Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1, obj.getName());
+			ps.setString(2, obj.getEmail());
+			ps.setString(3, obj.getPassword());
+			int rowsAffected = ps.executeUpdate();
+			if (rowsAffected > 0) {
+				ResultSet rs = ps.getGeneratedKeys();
+				if (rs.next()) {
+					int id = rs.getInt(1);
+					obj.setId(id);
+				}
+				DB.closeResultSet(rs);
+			} else {
+				throw new DbException("Unexpected error! No rows affected");
+			}
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(ps);
+		}
 
 	}
 
