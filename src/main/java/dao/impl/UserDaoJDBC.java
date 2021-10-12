@@ -47,7 +47,7 @@ public class UserDaoJDBC implements UserDao {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			ps = con.prepareStatement("SELECT * FROM tb_user WHERE Id = ?");
+			ps = con.prepareStatement("SELECT * FROM tb_user WHERE id = ?");
 			ps.setInt(1, id);
 			rs = ps.executeQuery();
 			if (rs.next()) {
@@ -90,13 +90,25 @@ public class UserDaoJDBC implements UserDao {
 		} finally {
 			DB.closeStatement(ps);
 		}
-
 	}
 
 	@Override
 	public void update(Integer id, User obj) {
-		// TODO Auto-generated method stub
-
+		PreparedStatement ps = null;
+		try {
+			ps = con.prepareStatement("UPDATE tb_user "
+					+ "SET name = ?, email = ?, password = ? " 
+					+ "WHERE id = ?");
+			ps.setString(1, obj.getName());
+			ps.setString(2, obj.getEmail());
+			ps.setString(3, obj.getPassword());
+			ps.setInt(4, obj.getId());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(ps);
+		}
 	}
 
 	@Override
