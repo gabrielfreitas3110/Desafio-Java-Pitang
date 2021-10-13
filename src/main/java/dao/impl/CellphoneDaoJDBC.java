@@ -69,12 +69,13 @@ public class CellphoneDaoJDBC implements CellphoneDao {
 		PreparedStatement ps = null;
 		try {
 			ps = con.prepareStatement("INSERT INTO " 
-					+ "tb_cellphone (ddd, number, type) " 
-					+ "VALUES (?, ?, ?) ",
+					+ "tb_cellphone (ddd, number, type, user_id) " 
+					+ "VALUES (?, ?, ?, ?) ",
 					Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, obj.getDdd());
 			ps.setString(2, obj.getNumber());
 			ps.setString(3, obj.getType());
+			ps.setInt(4, obj.getUser_id());
 			int rowsAffected = ps.executeUpdate();
 			if (rowsAffected > 0) {
 				ResultSet rs = ps.getGeneratedKeys();

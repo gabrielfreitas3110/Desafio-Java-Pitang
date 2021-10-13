@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bean.Cellphone;
-import bean.User;
 import dao.CellphoneDao;
 import dao.DaoFactory;
 

@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import bean.Cellphone;
 import bean.User;
 import dao.UserDao;
 import db.DB;
@@ -49,16 +50,26 @@ public class UserDaoJDBC implements UserDao {
 		ResultSet rs = null;
 		try {
 			ps = con.prepareStatement(
-					"SELECT tb_user.*, tb_cellphone.ddd, tb_cellphone.number, tb_cellphone.type "
+					"SELECT tb_user.*, tb_cellphone.id AS cell_id, tb_cellphone.ddd, tb_cellphone.number, tb_cellphone.type "
 					+ "FROM tb_user INNER JOIN tb_cellphone "
 					+ "ON tb_user.id = tb_cellphone.user_id WHERE tb_cellphone.user_id = ?");
 			ps.setInt(1, id);
 			rs = ps.executeQuery();
-			if (rs.next()) {
-				User obj = instantiateUser(rs);
-				return obj;
+			User user = null;
+			while (rs.next()) {
+				if(user == null) {
+					user = instantiateUser(rs);
+				}
+				Cellphone cell = instantiateCellphone(rs);
+				if(!user.getCellphones().contains(cell)) {
+					cell = instantiateCellphone(rs);
+					user.addCellphone(cell);
+				}
 			}
-			return null;
+			if(user != null)
+				return user;
+			else
+				return null;
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
 		} finally {
@@ -139,6 +150,15 @@ public class UserDaoJDBC implements UserDao {
 		obj.setName(rs.getString("name"));
 		obj.setEmail(rs.getString("email"));
 		obj.setPassword(rs.getString("password"));
+		return obj;
+	}
+
+	private Cellphone instantiateCellphone(ResultSet rs) throws SQLException {
+		Cellphone obj = new Cellphone();
+		obj.setId(rs.getInt("cell_id"));
+		obj.setDdd(rs.getInt("ddd"));
+		obj.setNumber(rs.getString("number"));
+		obj.setType(rs.getString("type"));
 		return obj;
 	}
 }

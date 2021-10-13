@@ -10,6 +10,7 @@ public class Cellphone implements Serializable{
 	private Integer ddd;
 	private String number;
 	private String type;
+	private Integer user_id;
 	
 	public Cellphone() {
 	}
@@ -53,6 +54,14 @@ public class Cellphone implements Serializable{
 		this.type = type;
 	}
 
+	public Integer getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(Integer user_id) {
+		this.user_id = user_id;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -69,4 +78,11 @@ public class Cellphone implements Serializable{
 		Cellphone other = (Cellphone) obj;
 		return Objects.equals(id, other.id);
 	}
+
+	@Override
+	public String toString() {
+		return id + ", (" + ddd + ") " + number + ", " + type;
+	}
+	
+	
 }

@@ -3,7 +3,9 @@ package application;
 import java.util.ArrayList;
 import java.util.List;
 
+import bean.Cellphone;
 import bean.User;
+import dao.CellphoneDao;
 import dao.DaoFactory;
 import dao.UserDao;
 
@@ -12,6 +14,8 @@ public class UserTestConfig {
 	public static void main(String[] args) {
 		
 		UserDao userDao = DaoFactory.createUserDao();
+		CellphoneDao cellphoneDao = DaoFactory.createCellphoneDao();
+		
 		User obj = new User(null, "Gabriel", "gabriel.freitas3110@gmail.com", "mypassword");
 		List<User> users = new ArrayList<>();
 		Integer id = null;
@@ -19,7 +23,23 @@ public class UserTestConfig {
 		System.out.println("<<====== TEST 1: user insert ======>>");
 		userDao.insert(obj);
 		id = obj.getId();
-		if(id != null) {
+		
+		Cellphone cell = new Cellphone(null, 64, "996662498", "Mobile");
+		Cellphone cell2 = new Cellphone(null, 32, "40028922", "Fix");
+		
+		cell.setUser_id(id);
+		cell2.setUser_id(id);
+		
+		cellphoneDao.insert(cell);
+		cellphoneDao.insert(cell2);
+		
+		Integer idCell = null;
+		Integer idCell2 = null;
+
+		idCell = cell.getId();
+		idCell2 = cell2.getId();
+		
+		if(id != null && idCell != null) {
 			System.out.println("TEST 1 OK! New id = " + obj.getId());
 		} else {
 			System.out.println("TEST 1 FAILED!");
@@ -28,6 +48,7 @@ public class UserTestConfig {
 		System.out.println("\n<<====== TEST 2: find by id =======>>");
 		obj = null;
 		obj = userDao.findById(id);
+		System.out.println(obj);
 		if(id == obj.getId()) {
 			System.out.println("TEST 2 OK! User found");
 		} else {
@@ -54,10 +75,14 @@ public class UserTestConfig {
 		}
 
 		System.out.println("\n<<====== TEST 5: delete user ======>>");
+		cellphoneDao.delete(idCell);
+		cellphoneDao.delete(idCell2);
 		userDao.delete(id);
 		obj = null;
+		cell = null;
 		obj = userDao.findById(id);
-		if(obj == null) {
+		cell = cellphoneDao.findById(idCell);
+		if(obj == null && cell == null) {
 			System.out.println("TEST 5 OK! User deleted");
 		} else {
 			System.out.println("TEST 5 FAILED!");
