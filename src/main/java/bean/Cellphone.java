@@ -82,6 +82,6 @@ public class Cellphone implements Serializable{
 
 	@Override
 	public String toString() {
-		return id + ", (" + ddd + ") " + number + ", " + type;
+		return id + ", (" + ddd + ") " + number + ", " + type + ", " + user_id + "\n";
 	}
 }

@@ -11,7 +11,6 @@
 	UserDao userDao = DaoFactory.createUserDao();
 	String id = request.getParameter("id");
 	User user = userDao.findById(Integer.parseInt(id));
-	System.out.println(user);
 	%>
 
 	<h2>Editing User</h2>

@@ -36,8 +36,8 @@ public class UserDaoJDBC implements UserDao {
 					+ "FROM tb_user INNER JOIN tb_cellphone "
 					+ "ON tb_user.id = tb_cellphone.user_id");
 			rs = ps.executeQuery();
-			List<User> users = new ArrayList<>();
 			Map<Integer, User> userMap = new HashMap<>();
+			Map<Integer, Cellphone> cellMap = new HashMap<>();
 			
 			while(rs.next()) {
 				User user = userMap.get(rs.getInt("id"));
@@ -45,11 +45,22 @@ public class UserDaoJDBC implements UserDao {
 					user = instantiateUser(rs);
 					userMap.put(rs.getInt("id"), user);
 				}
-				Cellphone cellphone = instantiateCellphone(rs);
-				if(user.getId() == cellphone.getUser_id()) {
-					user.addCellphone(cellphone);
+				Cellphone cellphone = cellMap.get(rs.getInt("cell_id"));
+				if(cellphone == null) {
+					cellphone = instantiateCellphone(rs);
+					cellMap.put(rs.getInt("cell_id"), cellphone);
 				}
-				users = new ArrayList<>(userMap.values());
+			}
+
+			List<User> users = new ArrayList<>(userMap.values());
+			List<Cellphone> cellphones = new ArrayList<>(cellMap.values());
+			
+			for(User u : users) {
+				for(Cellphone c : cellphones) {
+					if(u.getId().equals(c.getUser_id())) {
+						u.addCellphone(c);
+					}
+				}
 			}
 			return users;
 		} catch (SQLException e) {

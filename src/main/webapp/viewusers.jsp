@@ -32,7 +32,7 @@
 				<td>${user.getPassword()}</td>
 				<td>${user.getCellphones()}</td>
 				<td><a href="editform.jsp?id=${user.getId()}">Edit</a></td>
-				<td><a href="#">Delete</a></td>
+				<td><a href="deleteuser.jsp?id=${user.getId()}">Delete</a></td>
 			</tr>
 		</c:forEach>
 	</table>

@@ -28,7 +28,7 @@ public class CellphoneTestConfig {
 		System.out.println("<<==== TEST 2: find by id ==========>>");
 		obj = null;
 		obj = cellphoneDao.findById(id);
-		if(id == obj.getId()) {
+		if(id.equals(obj.getId())) {
 			System.out.println("TEST 2 OK! Cellphone found");
 		} else {
 			System.out.println("TEST 2 FAILED!");

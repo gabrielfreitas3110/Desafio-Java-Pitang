@@ -49,7 +49,7 @@ public class UserTestConfig {
 		obj = null;
 		obj = userDao.findById(id);
 		System.out.println(obj);
-		if(id == obj.getId()) {
+		if(id.equals(obj.getId())) {
 			System.out.println("TEST 2 OK! User found");
 		} else {
 			System.out.println("TEST 2 FAILED!");

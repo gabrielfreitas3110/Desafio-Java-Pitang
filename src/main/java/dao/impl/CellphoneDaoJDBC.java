@@ -128,7 +128,23 @@ public class CellphoneDaoJDBC implements CellphoneDao {
 		} finally {
 			DB.closeStatement(ps);
 		}
+	}
 
+	@Override
+	public void deleteByUserId(Integer id) {
+		PreparedStatement ps = null;
+		try {
+			ps = con.prepareStatement("DELETE FROM tb_cellphone WHERE user_id = ?");
+			ps.setInt(1, id);
+			int rows = ps.executeUpdate();
+			if (rows == 0 ) {
+				throw new DbException("Id doesn't exists in table tb_cellphone");
+			}
+		} catch (SQLException e) {
+			throw new DbIntegrityException(e.getMessage());
+		} finally {
+			DB.closeStatement(ps);
+		}
 	}
 
 	private Cellphone instantiateCellphones(ResultSet rs) throws SQLException {

@@ -15,4 +15,6 @@ public interface CellphoneDao {
 	void update(Cellphone obj);
 
 	void delete(Integer id);
+	
+	void deleteByUserId(Integer id);
 }
