@@ -5,7 +5,10 @@
 <title>Add User</title>
 </head>
 <body>
-	<button onclick="window.location.href='viewusers.jsp'">All Users</button>
+	<%@ page import="bean.User, dao.*, java.util.*"%>
+
+	<button onclick="window.location.href='viewusers.jsp'">All
+		Users</button>
 	<h2>Registry new user</h2>
 
 	<form action="adduser.jsp" method="post">

@@ -12,7 +12,17 @@
 	UserDao userDao = DaoFactory.createUserDao();
 	List<User> users = userDao.findAll();
 	request.setAttribute("users", users);
+	Boolean logged = false;
+	for(User u : users) {
+		if(u.getLogged()) {
+			logged = true;
+		}
+	}
+	if(!logged) {
+		response.sendRedirect("index.jsp");
+	}
 	%>
+	<button onclick="window.location.href='logout.jsp'">Logout</button>
 	<h2>List of Users</h2>
 	<table border="1">
 		<tr>
@@ -30,7 +40,7 @@
 				<td>${user.getName()}</td>
 				<td>${user.getEmail()}</td>
 				<td>${user.getPassword()}</td>
-				<td>${user.getCellphones()}</td>
+				<td class="hidden">${user.getCellphones()}</td>
 				<td><a href="editform.jsp?id=${user.getId()}">Edit</a></td>
 				<td><a href="deleteuser.jsp?id=${user.getId()}">Delete</a></td>
 			</tr>
