@@ -12,7 +12,7 @@ public class User implements Serializable{
 	private String name;
 	private String email;
 	private String password;
-	
+
 	private List<Cellphone> cellphones = new ArrayList<>();
 	
 	public User() {
