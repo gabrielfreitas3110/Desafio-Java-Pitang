@@ -45,7 +45,7 @@ public class CellphoneTestConfig {
 		System.out.println("\n<<==== TEST 4: update cell =========>>");
 		Cellphone newCellphone = new Cellphone(null, 32, null, null, null);
 		obj.setDdd(newCellphone.getDdd());
-		cellphoneDao.update(id, obj);
+		cellphoneDao.update(obj);
 		obj = cellphoneDao.findById(id);
 		if(obj.getDdd().equals(newCellphone.getDdd())) {
 			System.out.println("TEST 4 OK! Ddd updated");

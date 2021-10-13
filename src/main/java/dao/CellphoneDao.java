@@ -12,7 +12,7 @@ public interface CellphoneDao {
 
 	void insert(Cellphone obj);
 
-	void update(Integer id, Cellphone obj);
+	void update(Cellphone obj);
 
 	void delete(Integer id);
 }

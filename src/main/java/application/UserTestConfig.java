@@ -66,7 +66,7 @@ public class UserTestConfig {
 		System.out.println("\n<<====== TEST 4: update user ======>>");
 		User newUser = new User(null, "Augusto", null, null);
 		obj.setName(newUser.getName());
-		userDao.update(id, obj);
+		userDao.update(obj);
 		obj = userDao.findById(id);
 		if(obj.getName().equals(newUser.getName())) {
 			System.out.println("TEST 4 OK! Name updated");

@@ -124,7 +124,7 @@ public class UserDaoJDBC implements UserDao {
 	}
 
 	@Override
-	public void update(Integer id, User obj) {
+	public void update(User obj) {
 		PreparedStatement ps = null;
 		try {
 			ps = con.prepareStatement("UPDATE tb_user "

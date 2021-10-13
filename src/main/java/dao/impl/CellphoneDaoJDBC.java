@@ -95,7 +95,7 @@ public class CellphoneDaoJDBC implements CellphoneDao {
 	}
 
 	@Override
-	public void update(Integer id, Cellphone obj) {
+	public void update(Cellphone obj) {
 		PreparedStatement ps = null;
 		try {
 			ps = con.prepareStatement("UPDATE tb_cellphone "
