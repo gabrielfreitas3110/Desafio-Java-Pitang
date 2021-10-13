@@ -110,12 +110,13 @@ public class UserDaoJDBC implements UserDao {
 		PreparedStatement ps = null;
 		try {
 			ps = con.prepareStatement("INSERT INTO " 
-					+ "tb_user (name, email, password) " 
-					+ "VALUES (?, ?, ?) ",
+					+ "tb_user (name, email, password, logged) " 
+					+ "VALUES (?, ?, ?, ?) ",
 					Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, obj.getName());
 			ps.setString(2, obj.getEmail());
 			ps.setString(3, obj.getPassword());
+			ps.setBoolean(4, obj.getLogged());
 			int rowsAffected = ps.executeUpdate();
 			if (rowsAffected > 0) {
 				ResultSet rs = ps.getGeneratedKeys();
@@ -139,12 +140,13 @@ public class UserDaoJDBC implements UserDao {
 		PreparedStatement ps = null;
 		try {
 			ps = con.prepareStatement("UPDATE tb_user "
-					+ "SET name = ?, email = ?, password = ? " 
+					+ "SET name = ?, email = ?, password = ?, logged = ? " 
 					+ "WHERE id = ?");
 			ps.setString(1, obj.getName());
 			ps.setString(2, obj.getEmail());
 			ps.setString(3, obj.getPassword());
-			ps.setInt(4, obj.getId());
+			ps.setBoolean(4, obj.getLogged());
+			ps.setInt(5, obj.getId());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
@@ -177,6 +179,7 @@ public class UserDaoJDBC implements UserDao {
 		obj.setName(rs.getString("name"));
 		obj.setEmail(rs.getString("email"));
 		obj.setPassword(rs.getString("password"));
+		obj.setLogged(rs.getBoolean("logged"));
 		return obj;
 	}
 

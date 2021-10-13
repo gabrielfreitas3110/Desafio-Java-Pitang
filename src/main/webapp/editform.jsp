@@ -12,7 +12,6 @@
 	String id = request.getParameter("id");
 	User user = userDao.findById(Integer.parseInt(id));
 	%>
-	<button onclick="window.location.href='index.jsp'">Home</button>
 	<button onclick="window.location.href='viewusers.jsp'">All Users</button>
 	<h2>Editing User</h2>
 	<form action="edituser.jsp" method="post">

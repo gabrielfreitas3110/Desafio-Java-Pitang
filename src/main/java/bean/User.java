@@ -12,7 +12,8 @@ public class User implements Serializable{
 	private String name;
 	private String email;
 	private String password;
-
+	private Boolean logged;
+	
 	private List<Cellphone> cellphones = new ArrayList<>();
 	
 	public User() {
@@ -23,6 +24,7 @@ public class User implements Serializable{
 		this.name = name;
 		this.email = email;
 		this.password = password;
+		this.logged = false;
 	}
 
 	public Integer getId() {
@@ -63,6 +65,14 @@ public class User implements Serializable{
 
 	public void addCellphone(Cellphone cellphone) {
 		this.cellphones.add(cellphone);
+	}
+
+	public Boolean getLogged() {
+		return logged;
+	}
+
+	public void setLogged(Boolean logged) {
+		this.logged = logged;
 	}
 
 	@Override

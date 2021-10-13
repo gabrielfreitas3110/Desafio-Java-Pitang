@@ -4,11 +4,15 @@
 
 <%
 	UserDao userDao = DaoFactory.createUserDao();
+	User user = new User();
 	List<User> users = userDao.findAll();
-	boolean logged = false;
-	for(User list : users) {
-		if(list.getEmail().equals(u.getEmail()) && list.getPassword().equals(u.getPassword())) {
+	Boolean logged = false;
+	for(User thisUser : users) {
+		if(thisUser.getEmail().equals(u.getEmail()) && thisUser.getPassword().equals(u.getPassword())) {
+			thisUser.setLogged(true);
 			logged = true;
+			userDao.update(thisUser);
+			user = userDao.findById(thisUser.getId());
 		} 
 	}
 	if(logged) {
