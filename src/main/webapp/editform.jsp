@@ -13,7 +13,7 @@
 	String id = request.getParameter("id");
 	User user = userDao.findById(Integer.parseInt(id));
 	if (!user.getLogged()) {
-		response.sendRedirect("index.jsp");
+		response.sendRedirect("editerror.jsp");
 	}
 	%>
 

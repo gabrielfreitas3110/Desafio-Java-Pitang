@@ -5,11 +5,12 @@
 <jsp:setProperty property="*" name="c" />
 
 <%
-
 UserDao userDao = DaoFactory.createUserDao();
-User user= userDao.findById(u.getId());
-if(user.getLogged() == null || !user.getLogged()) {
+User user = userDao.findById(u.getId());
+if (user == null) {
 	response.sendRedirect("index.jsp");
+} else if (!user.getLogged()) {
+	response.sendRedirect("delerror.jsp");
 } else {
 	CellphoneDao cellphoneDao = DaoFactory.createCellphoneDao();
 	cellphoneDao.deleteByUserId(u.getId());

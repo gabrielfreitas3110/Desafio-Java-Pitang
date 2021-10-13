@@ -47,6 +47,5 @@
 		</c:forEach>
 	</table>
 	<br>
-	<a href="addform.jsp">Add new User</a>
 </body>
 </html>
