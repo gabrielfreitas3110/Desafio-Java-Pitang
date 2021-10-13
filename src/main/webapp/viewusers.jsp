@@ -13,6 +13,8 @@
 	List<User> users = userDao.findAll();
 	request.setAttribute("users", users);
 	%>
+	<button onclick="window.location.href='index.jsp'">Home</button>
+	<button onclick="window.location.href='viewusers.jsp'">All Users</button>
 	<h2>List of Users</h2>
 	<table border="1">
 		<tr>
