@@ -15,11 +15,12 @@ public class Cellphone implements Serializable{
 	public Cellphone() {
 	}
 	
-	public Cellphone(Integer id, Integer ddd, String number, String type) {
+	public Cellphone(Integer id, Integer ddd, String number, String type, Integer user_id) {
 		this.id = id;
 		this.ddd = ddd;
 		this.number = number;
 		this.type = type;
+		this.user_id = user_id;
 	}
 
 	public Integer getId() {
@@ -83,6 +84,4 @@ public class Cellphone implements Serializable{
 	public String toString() {
 		return id + ", (" + ddd + ") " + number + ", " + type;
 	}
-	
-	
 }

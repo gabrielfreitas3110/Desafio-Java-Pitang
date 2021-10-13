@@ -24,8 +24,8 @@ public class UserTestConfig {
 		userDao.insert(obj);
 		id = obj.getId();
 		
-		Cellphone cell = new Cellphone(null, 64, "996662498", "Mobile");
-		Cellphone cell2 = new Cellphone(null, 32, "40028922", "Fix");
+		Cellphone cell = new Cellphone(null, 64, "996662498", "Mobile", null);
+		Cellphone cell2 = new Cellphone(null, 32, "40028922", "Fix", null);
 		
 		cell.setUser_id(id);
 		cell2.setUser_id(id);
@@ -87,5 +87,9 @@ public class UserTestConfig {
 		} else {
 			System.out.println("TEST 5 FAILED!");
 		}
+		
+		System.out.println("------------------------------------");
+		users = userDao.findAll();
+		System.out.println(users);
 	}
 }

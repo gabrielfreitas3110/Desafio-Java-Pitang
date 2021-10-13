@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import bean.Cellphone;
 import bean.User;
@@ -27,13 +29,27 @@ public class UserDaoJDBC implements UserDao {
 	public List<User> findAll() {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		
 		try {
-			ps = con.prepareStatement("SELECT * FROM tb_user ORDER BY name");
+			ps = con.prepareStatement(
+					"SELECT tb_user.*, tb_cellphone.id AS cell_id, tb_cellphone.ddd, tb_cellphone.number, tb_cellphone.type, tb_cellphone.user_id "
+					+ "FROM tb_user INNER JOIN tb_cellphone "
+					+ "ON tb_user.id = tb_cellphone.user_id");
 			rs = ps.executeQuery();
 			List<User> users = new ArrayList<>();
-			while (rs.next()) {
-				User obj = instantiateUser(rs);
-				users.add(obj);
+			Map<Integer, User> userMap = new HashMap<>();
+			
+			while(rs.next()) {
+				User user = userMap.get(rs.getInt("id"));
+				if(user == null) {
+					user = instantiateUser(rs);
+					userMap.put(rs.getInt("id"), user);
+				}
+				Cellphone cellphone = instantiateCellphone(rs);
+				if(user.getId() == cellphone.getUser_id()) {
+					user.addCellphone(cellphone);
+				}
+				users = new ArrayList<>(userMap.values());
 			}
 			return users;
 		} catch (SQLException e) {
@@ -50,7 +66,7 @@ public class UserDaoJDBC implements UserDao {
 		ResultSet rs = null;
 		try {
 			ps = con.prepareStatement(
-					"SELECT tb_user.*, tb_cellphone.id AS cell_id, tb_cellphone.ddd, tb_cellphone.number, tb_cellphone.type "
+					"SELECT tb_user.*, tb_cellphone.id AS cell_id, tb_cellphone.ddd, tb_cellphone.number, tb_cellphone.type, tb_cellphone.user_id "
 					+ "FROM tb_user INNER JOIN tb_cellphone "
 					+ "ON tb_user.id = tb_cellphone.user_id WHERE tb_cellphone.user_id = ?");
 			ps.setInt(1, id);
@@ -159,6 +175,7 @@ public class UserDaoJDBC implements UserDao {
 		obj.setDdd(rs.getInt("ddd"));
 		obj.setNumber(rs.getString("number"));
 		obj.setType(rs.getString("type"));
+		obj.setUser_id(rs.getInt("user_id"));
 		return obj;
 	}
 }

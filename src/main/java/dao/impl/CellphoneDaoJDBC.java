@@ -137,6 +137,7 @@ public class CellphoneDaoJDBC implements CellphoneDao {
 		obj.setDdd(rs.getInt("ddd"));
 		obj.setNumber(rs.getString("number"));
 		obj.setType(rs.getString("type"));
+		obj.setUser_id(rs.getInt("user_id"));
 		return obj;
 	}
 }

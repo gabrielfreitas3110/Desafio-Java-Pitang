@@ -66,19 +66,6 @@ public class User implements Serializable{
 	}
 
 	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(id).append(", ");
-		sb.append(name).append(", ");
-		sb.append(email).append(", ");
-		sb.append(password).append(",\n");
-		for(Cellphone c : cellphones) {
-			sb.append(c.toString()).append("\n");
-		}
-		return sb.toString();
-	}
-
-	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
@@ -93,5 +80,18 @@ public class User implements Serializable{
 			return false;
 		User other = (User) obj;
 		return Objects.equals(id, other.id);
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(id).append(", ");
+		sb.append(name).append(", ");
+		sb.append(email).append(", ");
+		sb.append(password).append(",\n");
+		for(Cellphone c : cellphones) {
+			sb.append(c.toString()).append("\n");
+		}
+		return sb.toString();
 	}
 }

@@ -12,7 +12,7 @@ public class CellphoneTestConfig {
 	public static void main(String[] args) {
 		
 		CellphoneDao cellphoneDao = DaoFactory.createCellphoneDao();
-		Cellphone obj = new Cellphone(null, 64, "996662498", "Mobile");
+		Cellphone obj = new Cellphone(null, 64, "996662498", "Mobile", 20);
 		List<Cellphone> cellphones = new ArrayList<>();
 		Integer id = null;
 		
@@ -42,8 +42,8 @@ public class CellphoneTestConfig {
 			System.out.println("TEST 3 FAILED!");
 		}
 
-		System.out.println("\n<<==== TEST 4: update user =========>>");
-		Cellphone newCellphone = new Cellphone(null, 32, null, null);
+		System.out.println("\n<<==== TEST 4: update cell =========>>");
+		Cellphone newCellphone = new Cellphone(null, 32, null, null, null);
 		obj.setDdd(newCellphone.getDdd());
 		cellphoneDao.update(id, obj);
 		obj = cellphoneDao.findById(id);
@@ -53,7 +53,7 @@ public class CellphoneTestConfig {
 			System.out.println("TEST 4 FAILED!");
 		}
 
-		System.out.println("\n<<==== TEST 5: delete user =========>>");
+		System.out.println("\n<<==== TEST 5: delete cell =========>>");
 		cellphoneDao.delete(id);
 		obj = null;
 		obj = cellphoneDao.findById(id);
@@ -62,5 +62,9 @@ public class CellphoneTestConfig {
 		} else {
 			System.out.println("TEST 5 FAILED!");
 		}
+		
+
+		cellphones = cellphoneDao.findAll();
+		System.out.println(cellphones);
 	}
 }
